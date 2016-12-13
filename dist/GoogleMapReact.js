@@ -1376,8 +1376,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } : {
 	          width: 0,
 	          height: 0
-	        }, map: map, maps: maps
-	      });
+	        }
+	      }, map, maps);
 	    };
 
 	    _this._onBoundsChanged = function (map, maps, callExtBoundsChange) {
@@ -1446,7 +1446,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                  width: 0,
 	                  height: 0
 	                }
-	              }, map, maps);
+	              });
 	            }
 
 	            _this.prevBounds_ = bounds;
