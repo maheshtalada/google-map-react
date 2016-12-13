@@ -997,7 +997,7 @@ export default class GoogleMap extends Component {
                   width: 0,
                   height: 0,
                 },
-            });
+            },map,maps);
           }
 
           this.prevBounds_ = bounds;

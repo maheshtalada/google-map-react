@@ -1446,7 +1446,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                  width: 0,
 	                  height: 0
 	                }
-	              });
+	              }, map, maps);
 	            }
 
 	            _this.prevBounds_ = bounds;
