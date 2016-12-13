@@ -651,6 +651,11 @@ export default class GoogleMap extends Component {
         this_.dragTime_ = (new Date()).getTime();
         this_._onDrag();
       });
+
+      maps.event.addListener(map, 'dragend', () => {
+        this_.dragTime_ = (new Date()).getTime();
+        this_._onDragEnd(map, maps);
+      });
       // user choosing satellite vs roads, etc
       maps.event.addListener(map, 'maptypeid_changed', () => {
         this_._onMapTypeIdChange(map.getMapTypeId());
@@ -860,6 +865,62 @@ export default class GoogleMap extends Component {
     (isPlainObject(center) && isNumber(center.lat) && isNumber(center.lng)) ||
     (center.length === 2 && isNumber(center[0]) && isNumber(center[1]))
   )
+
+  _onDragEnd = (map, maps) => {
+    const zoom = this.geoService_.getZoom();
+    const bounds = this.geoService_.getBounds();
+    const centerLatLng = this.geoService_.getCenter();
+    const marginBounds = this.geoService_.getBounds(this.props.margin);
+    this.props.onDragEnd && this.props.onDragEnd({
+        center: { ...centerLatLng },
+        zoom,
+        bounds: {
+          nw: {
+            lat: bounds[0],
+            lng: bounds[1]
+          },
+          se: {
+            lat: bounds[2],
+            lng: bounds[3]
+          },
+          sw: {
+            lat: bounds[4],
+            lng: bounds[5]
+          },
+          ne: {
+            lat: bounds[6],
+            lng: bounds[7]
+          }
+        },
+        marginBounds: {
+          nw: {
+            lat: marginBounds[0],
+            lng: marginBounds[1]
+          },
+          se: {
+            lat: marginBounds[2],
+            lng: marginBounds[3]
+          },
+          sw: {
+            lat: marginBounds[4],
+            lng: marginBounds[5]
+          },
+          ne: {
+            lat: marginBounds[6],
+            lng: marginBounds[7]
+          }
+        },
+        size: this.geoService_.hasSize()
+            ? {
+          width: this.geoService_.getWidth(),
+          height: this.geoService_.getHeight(),
+        }
+            : {
+          width: 0,
+          height: 0,
+        }
+      });
+  }
 
   _onBoundsChanged = (map, maps, callExtBoundsChange) => {
     if (map) {
