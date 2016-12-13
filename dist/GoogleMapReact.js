@@ -1376,7 +1376,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } : {
 	          width: 0,
 	          height: 0
-	        }
+	        }, map: map, maps: maps
 	      });
 	    };
 
