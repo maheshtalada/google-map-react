@@ -35,7 +35,7 @@ function latLng2MetersPerDegree({ lat }) {
   return { metersPerLatDegree, metersPerLngDegree };
 }
 
-function meters2LatLngBounds(meters, { lat, lng }) {
+export function meters2LatLngBounds(meters, { lat, lng }) {
   const { metersPerLatDegree, metersPerLngDegree } = latLng2MetersPerDegree({ lat });
 
   const latDelta = 0.5 * meters / metersPerLatDegree;

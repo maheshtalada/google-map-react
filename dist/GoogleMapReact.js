@@ -1024,11 +1024,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return (0, _raf2.default)(function () {
 	                  this_.updateCounter_++;
 	                  this_._onBoundsChanged(map, maps);
+	                  this_._onZoomChange(map, maps);
 	                });
 	              });
 	            } else {
 	              this_.updateCounter_++;
 	              this_._onBoundsChanged(map, maps);
+	              this_._onZoomChange(map, maps);
 	            }
 	          }
 	        });
@@ -1103,6 +1105,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this_.dragTime_ = new Date().getTime();
 	          this_._onDragEnd(map, maps);
 	        });
+
 	        // user choosing satellite vs roads, etc
 	        maps.event.addListener(map, 'maptypeid_changed', function () {
 	          this_._onMapTypeIdChange(map.getMapTypeId());
@@ -1332,6 +1335,60 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var centerLatLng = _this.geoService_.getCenter();
 	      var marginBounds = _this.geoService_.getBounds(_this.props.margin);
 	      _this.props.onDragEnd && _this.props.onDragEnd({
+	        center: _extends({}, centerLatLng),
+	        zoom: zoom,
+	        bounds: {
+	          nw: {
+	            lat: bounds[0],
+	            lng: bounds[1]
+	          },
+	          se: {
+	            lat: bounds[2],
+	            lng: bounds[3]
+	          },
+	          sw: {
+	            lat: bounds[4],
+	            lng: bounds[5]
+	          },
+	          ne: {
+	            lat: bounds[6],
+	            lng: bounds[7]
+	          }
+	        },
+	        marginBounds: {
+	          nw: {
+	            lat: marginBounds[0],
+	            lng: marginBounds[1]
+	          },
+	          se: {
+	            lat: marginBounds[2],
+	            lng: marginBounds[3]
+	          },
+	          sw: {
+	            lat: marginBounds[4],
+	            lng: marginBounds[5]
+	          },
+	          ne: {
+	            lat: marginBounds[6],
+	            lng: marginBounds[7]
+	          }
+	        },
+	        size: _this.geoService_.hasSize() ? {
+	          width: _this.geoService_.getWidth(),
+	          height: _this.geoService_.getHeight()
+	        } : {
+	          width: 0,
+	          height: 0
+	        }
+	      }, map, maps);
+	    };
+
+	    _this._onZoomChange = function (map, maps) {
+	      var zoom = _this.geoService_.getZoom();
+	      var bounds = _this.geoService_.getBounds();
+	      var centerLatLng = _this.geoService_.getCenter();
+	      var marginBounds = _this.geoService_.getBounds(_this.props.margin);
+	      _this.props.onZoomChange && _this.props.onZoomChange({
 	        center: _extends({}, centerLatLng),
 	        zoom: zoom,
 	        bounds: {

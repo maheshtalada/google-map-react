@@ -576,10 +576,12 @@ export default class GoogleMap extends Component {
             raf(() => raf(() => {
               this_.updateCounter_++;
               this_._onBoundsChanged(map, maps);
+              this_._onZoomChange(map,maps);
             }));
           } else {
             this_.updateCounter_++;
             this_._onBoundsChanged(map, maps);
+            this_._onZoomChange(map,maps);
           }
         }
       });
@@ -656,6 +658,7 @@ export default class GoogleMap extends Component {
         this_.dragTime_ = (new Date()).getTime();
         this_._onDragEnd(map, maps);
       });
+
       // user choosing satellite vs roads, etc
       maps.event.addListener(map, 'maptypeid_changed', () => {
         this_._onMapTypeIdChange(map.getMapTypeId());
@@ -920,6 +923,62 @@ export default class GoogleMap extends Component {
           height: 0,
         }
       },map,maps);
+  }
+
+  _onZoomChange = (map, maps) => {
+    const zoom = this.geoService_.getZoom();
+    const bounds = this.geoService_.getBounds();
+    const centerLatLng = this.geoService_.getCenter();
+    const marginBounds = this.geoService_.getBounds(this.props.margin);
+    this.props.onZoomChange && this.props.onZoomChange({
+      center: { ...centerLatLng },
+      zoom,
+      bounds: {
+      nw: {
+        lat: bounds[0],
+            lng: bounds[1]
+      },
+      se: {
+        lat: bounds[2],
+            lng: bounds[3]
+      },
+      sw: {
+        lat: bounds[4],
+            lng: bounds[5]
+      },
+      ne: {
+        lat: bounds[6],
+            lng: bounds[7]
+      }
+    },
+      marginBounds: {
+      nw: {
+        lat: marginBounds[0],
+            lng: marginBounds[1]
+      },
+      se: {
+        lat: marginBounds[2],
+            lng: marginBounds[3]
+      },
+      sw: {
+        lat: marginBounds[4],
+            lng: marginBounds[5]
+      },
+      ne: {
+        lat: marginBounds[6],
+            lng: marginBounds[7]
+      }
+    },
+      size: this.geoService_.hasSize()
+        ? {
+        width: this.geoService_.getWidth(),
+        height: this.geoService_.getHeight(),
+      }
+        : {
+      width: 0,
+      height: 0,
+    }
+    },map,maps);
   }
 
   _onBoundsChanged = (map, maps, callExtBoundsChange) => {
