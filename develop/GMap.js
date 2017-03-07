@@ -71,6 +71,9 @@ export const gMapHOC = compose(
     onChange: ({ setMapParams }) => ({ center, zoom, bounds }) => {
       setMapParams({ center, zoom, bounds });
     },
+    onChange: ({ setMapParams }) => ({ center, zoom, bounds }) => {
+      setMapParams({ center, zoom, bounds });
+    },
     onChildMouseEnter: ({ setHoveredMarkerId }) => (hoverKey, { id }) => {
       setHoveredMarkerId(id);
     },

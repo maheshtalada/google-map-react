@@ -2719,7 +2719,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	// TODO add libraries language and other map options
-	function googleMapLoader(bootstrapURLKeys) {
+	function googleMapLoader(bootstrapURLKeys, cb) {
 	  if (!$script_) {
 	    $script_ = __webpack_require__(24); // eslint-disable-line
 	  }
@@ -2767,7 +2767,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, '');
 
 	    $script_('https://maps.googleapis.com/maps/api/js?callback=_$_google_map_initialize_$_' + queryString, function () {
-	      return typeof window.google === 'undefined' && reject(new Error('google map initialization error (not loaded)'));
+	      if (typeof cb === 'function ') {
+	        cb(window.google);
+	      }
+	      typeof window.google === 'undefined' && reject(new Error('google map initialization error (not loaded)'));
 	    });
 	  });
 
