@@ -422,7 +422,7 @@ export default class GoogleMap extends Component {
     };
 
     this.props.googleMapLoader(bootstrapURLKeys)
-    .then(maps => {
+    .then(({maps}) => {
       if (!this.mounted_) {
         return;
       }

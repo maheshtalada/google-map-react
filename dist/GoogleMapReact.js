@@ -886,7 +886,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var bootstrapURLKeys = _extends({}, _this.props.apiKey && { key: _this.props.apiKey }, _this.props.bootstrapURLKeys);
 
-	      _this.props.googleMapLoader(bootstrapURLKeys).then(function (maps) {
+	      _this.props.googleMapLoader(bootstrapURLKeys).then(function (_ref) {
+	        var maps = _ref.maps;
+
 	        if (!_this.mounted_) {
 	          return;
 	        }
@@ -2719,7 +2721,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	// TODO add libraries language and other map options
-	function googleMapLoader(bootstrapURLKeys, cb) {
+	function googleMapLoader(bootstrapURLKeys) {
 	  if (!$script_) {
 	    $script_ = __webpack_require__(24); // eslint-disable-line
 	  }
@@ -2741,7 +2743,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    if (window.google && window.google.maps) {
-	      resolve(window.google.maps);
+	      resolve(window.google);
 	      return;
 	    }
 
@@ -2751,7 +2753,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    window._$_google_map_initialize_$_ = function () {
 	      delete window._$_google_map_initialize_$_;
-	      resolve(window.google.maps);
+	      resolve(window.google);
 	    };
 
 	    if (true) {
@@ -2767,9 +2769,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, '');
 
 	    $script_('https://maps.googleapis.com/maps/api/js?callback=_$_google_map_initialize_$_' + queryString, function () {
-	      if (typeof cb === 'function ') {
-	        cb(window.google);
-	      }
+	      typeof window.google !== 'undefined' && resolve(window.google);
 	      typeof window.google === 'undefined' && reject(new Error('google map initialization error (not loaded)'));
 	    });
 	  });
