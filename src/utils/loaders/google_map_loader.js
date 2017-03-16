@@ -30,7 +30,7 @@ export default function googleMapLoader(bootstrapURLKeys) {
     }
 
     if (window.google && window.google.maps) {
-      resolve(window.google);
+      resolve(window.google.maps);
       return;
     }
 
@@ -40,7 +40,7 @@ export default function googleMapLoader(bootstrapURLKeys) {
 
     window._$_google_map_initialize_$_ = () => {
       delete window._$_google_map_initialize_$_;
-      resolve(window.google);
+      resolve(window.google.maps);
     };
 
     if (process.env.NODE_ENV !== 'production') {
@@ -61,7 +61,6 @@ export default function googleMapLoader(bootstrapURLKeys) {
     $script_(
       `https://maps.googleapis.com/maps/api/js?callback=_$_google_map_initialize_$_${queryString}`,
       () => {
-        typeof window.google !== 'undefined' && resolve(window.google);
         typeof window.google === 'undefined' &&
         reject(new Error('google map initialization error (not loaded)'))
       });

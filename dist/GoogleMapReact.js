@@ -886,9 +886,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var bootstrapURLKeys = _extends({}, _this.props.apiKey && { key: _this.props.apiKey }, _this.props.bootstrapURLKeys);
 
-	      _this.props.googleMapLoader(bootstrapURLKeys).then(function (_ref) {
-	        var maps = _ref.maps;
-
+	      _this.props.googleMapLoader(bootstrapURLKeys).then(function (maps) {
 	        if (!_this.mounted_) {
 	          return;
 	        }
@@ -2743,7 +2741,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    if (window.google && window.google.maps) {
-	      resolve(window.google);
+	      resolve(window.google.maps);
 	      return;
 	    }
 
@@ -2753,7 +2751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    window._$_google_map_initialize_$_ = function () {
 	      delete window._$_google_map_initialize_$_;
-	      resolve(window.google);
+	      resolve(window.google.maps);
 	    };
 
 	    if (true) {
@@ -2769,7 +2767,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, '');
 
 	    $script_('https://maps.googleapis.com/maps/api/js?callback=_$_google_map_initialize_$_' + queryString, function () {
-	      typeof window.google !== 'undefined' && resolve(window.google);
 	      typeof window.google === 'undefined' && reject(new Error('google map initialization error (not loaded)'));
 	    });
 	  });
