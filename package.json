@@ -44,6 +44,7 @@
     "eventemitter3": "^1.1.0",
     "fbjs": "^0.8.3",
     "point-geometry": "0.0.0",
+    "prop-types": "^15.6.2",
     "scriptjs": "^2.5.7"
   },
   "devDependencies": {
